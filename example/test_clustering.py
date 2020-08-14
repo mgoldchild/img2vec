@@ -1,18 +1,29 @@
-import sys
 import os
+import sys
 from shutil import copyfile
-sys.path.append("../img2vec_pytorch")  # Adds higher directory to python modules path.
 
-from img_to_vec import Img2Vec
-from PIL import Image
 import numpy as np
+from PIL import Image
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
-input_path = './test_images'
+sys.path.append("../img2vec_pytorch")  # Adds higher directory to python modules path.
+
+
+input_path = './patch_images'
 files = os.listdir(input_path)
 
-img2vec = Img2Vec()
+
+img2vec = None
+
+
+def load_img2vec():
+    from img_to_vec import Img2Vec
+    global img2vec
+    img2vec = Img2Vec()
+
+
+load_img2vec()
 vec_length = 512  # Using resnet-18 as default
 
 samples = len(files)  # Amount of samples to take from input path
@@ -27,8 +38,10 @@ print('Reading images...')
 for index, i in enumerate(sample_indices):
     file = files[i]
     filename = os.fsdecode(file)
-    img = Image.open(os.path.join(input_path, filename))
+    img = Image.open(os.path.join(input_path, filename)).convert('RGB')
+    # img = img.resize(10, 10)
     vec = img2vec.get_vec(img)
+    print("vec.shape", vec.shape)
     vec_mat[index, :] = vec
 
 print('Applying PCA...')

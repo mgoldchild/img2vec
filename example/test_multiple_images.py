@@ -1,21 +1,31 @@
-import sys
 import os
-sys.path.append("../img2vec_pytorch")  # Adds higher directory to python modules path.
-from img_to_vec import Img2Vec
+import sys
+
 from PIL import Image
 from sklearn.metrics.pairwise import cosine_similarity
 
+sys.path.append("../img2vec_pytorch")  # Adds higher directory to python modules path.
 
-input_path = './test_images'
 
-img2vec = Img2Vec(model='alexnet')
+input_path = './patch_images'
+
+img2vec = None
+
+
+def load_img2vec():
+    from img_to_vec import Img2Vec
+    global img2vec
+    img2vec = Img2Vec(model='alexnet')
+
+
+load_img2vec()
 
 # For each test image, we store the image in a list
 list_pics = []
 filenames = []
 for file in os.listdir(input_path):
     filename = os.fsdecode(file)
-    img = Image.open(os.path.join(input_path, filename))
+    img = Image.open(os.path.join(input_path, filename)).convert('RGB')
     list_pics.append(img)
     filenames.append(filename)
 
