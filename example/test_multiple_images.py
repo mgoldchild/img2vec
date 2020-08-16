@@ -7,7 +7,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 sys.path.append("../img2vec_pytorch")  # Adds higher directory to python modules path.
 
 
-input_path = './patch_images'
+input_path = './patch_images2'
 
 img2vec = None
 

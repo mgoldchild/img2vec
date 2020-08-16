@@ -10,7 +10,7 @@ from sklearn.decomposition import PCA
 sys.path.append("../img2vec_pytorch")  # Adds higher directory to python modules path.
 
 
-input_path = './patch_images'
+input_path = './patch_images3'
 files = os.listdir(input_path)
 
 
@@ -27,7 +27,7 @@ load_img2vec()
 vec_length = 512  # Using resnet-18 as default
 
 samples = len(files)  # Amount of samples to take from input path
-k_value = 2  # How many clusters
+k_value = 4  # How many clusters
 
 # Matrix to hold the image vectors
 vec_mat = np.zeros((samples, vec_length))
